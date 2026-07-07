@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,10 +17,19 @@ const Posts = () => {
         setPosts(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     };
     fecthPosts();
   }, []);
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#050505]">
+        <div className="w-12 h-12 border-4 border-slate-700 border-t-sky-500 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
   return (
     <div className="w-full min-h-screen bg-[#050505] bg-gradient-to-br from-[#07080c] via-[#08101a] to-[#07020a] flex items-center justify-center px-4 p-20">
       <div className="w-full  rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
